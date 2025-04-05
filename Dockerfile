@@ -1,21 +1,26 @@
 # Sử dụng Node.js chính thức làm base image
 FROM node:20-alpine
 
-# Thiết lập thư mục làm việc trong container
+# Thiết lập thư mục làm việc
 WORKDIR /app
 
-# Sao chép package.json và package-lock.json (hoặc yarn.lock) vào container
-COPY package*.json ./
+# Sao chép file package.json và package-lock.json (nếu có)
+COPY package.json ./
 
-# Cài đặt các dependencies cần thiết
+# Cài đặt dependencies
 RUN npm install
 
-# Sao chép toàn bộ mã nguồn vào container
+# Sao chép toàn bộ mã nguồn
 COPY . .
 
+# Build ứng dụng Next.js
+RUN npm run build
 
-# Mở cổng 3000 (cổng mặc định của Next.js)
+# Expose cổng mà Next.js sử dụng (mặc định là 3000)
 EXPOSE 3000
 
-# Lệnh khởi động ứng dụng Next.js
+# Thiết lập biến môi trường (mặc định là production)
+ENV NODE_ENV=production
+
+# Chạy ứng dụng
 CMD ["npm", "start"]
