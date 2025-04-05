@@ -132,7 +132,7 @@ export default function Transaction() {
   return (
     <AuthGuard>
       <Main title={"Transaction"}>
-        {user.role === "ADMIN" && (
+        {user?.role === "ADMIN" && (
           <div>
             <Button variant="primary" onClick={handleShow}>
               Điều chỉnh chi phí

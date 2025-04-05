@@ -3,7 +3,7 @@ import { Form, Row, Col } from "react-bootstrap";
 
 const CustomerInfo = ({ customerInfo, setCustomerInfo, errors }) => {
   const handleChange = (e) => {
-    const { name, value } = e.target;
+    let { name, value } = e.target;
     setCustomerInfo((prevData) => ({
       ...prevData,
       [name]: value,
@@ -12,7 +12,15 @@ const CustomerInfo = ({ customerInfo, setCustomerInfo, errors }) => {
   const handleBluer = (e) => {
     let phoneNumber = e.target.value;
     if (!phoneNumber) return;
-    if (!phoneNumber.startsWith("+1") && !phoneNumber.startsWith("(+1)")) {
+    if (phoneNumber.startsWith("+1") ) {
+      phoneNumber = phoneNumber.replace(/^\+1/, "(+1)");
+      setCustomerInfo({
+        ...customerInfo,
+        phone: phoneNumber,
+      });
+      return;
+    }
+    if(!phoneNumber.startsWith("(+1)")){
       phoneNumber = "(+1)" + phoneNumber;
       setCustomerInfo({
         ...customerInfo,
@@ -23,7 +31,7 @@ const CustomerInfo = ({ customerInfo, setCustomerInfo, errors }) => {
 
   return (
     <div>
-      <Form.Group as={Row} className="mb-3">
+      <Form.Group as={Row} className="mb-3" autocomplete="off">
         <Col>
           <Form.Label>
             Customer Name <span className="text-danger">* </span>

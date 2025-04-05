@@ -9,8 +9,6 @@ const PerfectScrollbar = dynamic(() => import('react-perfect-scrollbar'), { ssr:
 import 'react-perfect-scrollbar/dist/css/styles.css'; 
 
 const RightSidebarLayout = ({ children, sidebar }) => {
-
-
   return (
     <div className={styles.layout}>
       <aside className={styles.sidebar}>{sidebar}</aside>

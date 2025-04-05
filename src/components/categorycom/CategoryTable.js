@@ -8,7 +8,7 @@ const CategoryTable = ({ categories, onEdit, onDelete, onAddProduct }) => {
         <tr>
           <th>#</th>
           <th>Tên danh mục</th>
-          <th>Sản phẩm</th>
+          <th>Số lượng sản phẩm</th>
           <th>Hành động</th>
         </tr>
       </thead>
@@ -16,12 +16,10 @@ const CategoryTable = ({ categories, onEdit, onDelete, onAddProduct }) => {
         {categories.map((category) => (
           <tr key={category.id}>
             <td>{category.id}</td>
-            <td>{category.name}</td>
+            <td>{category.categoryName}</td>
             <td>
               <ul>
-                {category.products.map((product) => (
-                  <li key={product.id}>{product.name}</li>
-                ))}
+                {category.products.length}
               </ul>
             </td>
             <td>

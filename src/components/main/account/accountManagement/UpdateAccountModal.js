@@ -146,7 +146,7 @@ const UpdateAccountModal = ({user, show, setShow, setUser }) => {
                 onChange={handleChange}
               />
               {errorVali.fullName && (
-                <span style={{ color: 'red', fontSize: '0.875rem' }}>
+                <span style={{ color: "red", fontSize: "0.875rem" }}>
                   {errorVali.fullName}
                 </span>
               )}
@@ -163,7 +163,7 @@ const UpdateAccountModal = ({user, show, setShow, setUser }) => {
                 onChange={handleChange}
               />
               {errorVali.email && (
-                <span style={{ color: 'red', fontSize: '0.875rem' }}>
+                <span style={{ color: "red", fontSize: "0.875rem" }}>
                   {errorVali.email}
                 </span>
               )}
@@ -180,7 +180,7 @@ const UpdateAccountModal = ({user, show, setShow, setUser }) => {
                 onChange={handleChange}
               />
               {errorVali.phone && (
-                <span style={{ color: 'red', fontSize: '0.875rem' }}>
+                <span style={{ color: "red", fontSize: "0.875rem" }}>
                   {errorVali.phone}
                 </span>
               )}
@@ -197,12 +197,11 @@ const UpdateAccountModal = ({user, show, setShow, setUser }) => {
                 onChange={handleChange}
               />
               {errorVali.password && (
-                <span style={{ color: 'red', fontSize: '0.875rem' }}>
+                <span style={{ color: "red", fontSize: "0.875rem" }}>
                   {errorVali.password}
                 </span>
               )}
             </Form.Group>
-
             {/* Số Dư */}
             <Form.Group controlId="balance" className="mt-2">
               <Form.Label>Cộng vào số dư</Form.Label>
@@ -213,24 +212,24 @@ const UpdateAccountModal = ({user, show, setShow, setUser }) => {
                 onChange={handleChange}
               />
               {errorVali.balance && (
-                <span style={{ color: 'red', fontSize: '0.875rem' }}>
+                <span style={{ color: "red", fontSize: "0.875rem" }}>
                   {errorVali.balance}
                 </span>
               )}
             </Form.Group>
 
             <Form.Group controlId="status" className="mt-2">
-            <Form.Label>Trạng Thái</Form.Label>
-            <Form.Control
-              as="select"
-              name="status"
-              value={user.status}
-              onChange={handleChange}
-            >
-              <option value="ACTIVE">ACTIVE</option>
-              <option value="LOCKED">LOCKED</option>
-            </Form.Control>
-          </Form.Group>
+              <Form.Label>Trạng Thái</Form.Label>
+              <Form.Control
+                as="select"
+                name="status"
+                value={user.status}
+                onChange={handleChange}
+              >
+                <option value="ACTIVE">ACTIVE</option>
+                <option value="LOCKED">LOCKED</option>
+              </Form.Control>
+            </Form.Group>
 
             {/* Nút tạo tài khoản */}
             <Button variant="primary" type="submit" className="mt-2">

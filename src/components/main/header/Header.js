@@ -10,7 +10,6 @@ let URL_ROOT = process.env.NEXT_PUBLIC_URL_ROOT
 
 function Header({ title }) {
   const { data } = getData(`${URL_ROOT}/private/user/get-user-login`);
-  console.log(data)
   function formatToUSD(amount) {
     
     return new Intl.NumberFormat('en-US', {

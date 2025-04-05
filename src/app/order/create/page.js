@@ -30,7 +30,7 @@ export default function CreateOrder() {
     street: "",
     streetTwo: "",
     city: "",
-    country: "",
+    country: "United States",
     zipCode: "",
   });
   const [orderInfo, setOrderInfo] = useState({
@@ -38,6 +38,8 @@ export default function CreateOrder() {
     tracking: "",
     extraId: "",
     status: "NEW",
+    desgin : "",
+    mockup: ""
   });
   const [errors, setErrors] = useState({});
   const [loading, setLoading] = useState(false);
@@ -66,7 +68,7 @@ export default function CreateOrder() {
     } else if (!/^(\(\+1\)|\+1|)?\s?\d{3}[-.\s]?\d{3}[-.\s]?\d{4}$/.test(customerInfo.phone)) {
       newErrors.phone = "Phone must be a valid US number (e.g., +1 812-258-7306)";
       isValid = false;
-    }    
+    }  
     if (
       customerInfo.email &&
       !/^[\w-]+(\.[\w-]+)*@([\w-]+\.)+[a-zA-Z]{2,7}$/.test(customerInfo.email)
@@ -143,7 +145,7 @@ export default function CreateOrder() {
       street: "",
       streetTwo: "",
       city: "",
-      country: "",
+      country: "United States",
       zipCode: "",
       status: "NEW",
     });
@@ -154,11 +156,23 @@ export default function CreateOrder() {
     });
     setErrors({});
   };
-
+  const fomartPhone = (value)=>{
+    let phoneNumber = value;
+    if (!phoneNumber) return;
+    if (phoneNumber.startsWith("+1") ) {
+      phoneNumber = phoneNumber.replace(/^\+1/, "(+1)");
+      return phoneNumber;
+    }
+    if(!phoneNumber.startsWith("(+1)")){
+      phoneNumber = "(+1)" + phoneNumber;
+    }
+    return phoneNumber;
+  }
   // Sử dụng hàm validateForm
   const handleSubmit = async () => {
     if (validInfo() && validateByTikTok() && validate()) {
       try {
+        customerInfo.phone = fomartPhone(customerInfo.phone);
         setLoading(true);
         let orders = {
           ...customerInfo,
@@ -196,7 +210,12 @@ export default function CreateOrder() {
     if (!textCopy) return;
     try {
       const addressObject = parseAddress(textCopy);
-      if (addressObject.phone && !addressObject.phone.startsWith("+1") && !addressObject.phone.startsWith("(+1)")) {
+      if(!addressObject.phone) return;
+      if (addressObject.phone.startsWith("+1")) {
+        addressObject.phone = addressObject.phone.replace(/^\+1/, "(+1)");
+      }
+
+      if(!addressObject.phone.startsWith("(+1)")){
         addressObject.phone = "(+1)" + addressObject.phone;
       }
       setAddressInfo({
@@ -214,6 +233,7 @@ export default function CreateOrder() {
       });
       setSelectedOption("By_Seller");
     } catch (error) {
+      console.log(error);
       toast.error("Lỗi!");
     }
   }, [textCopy]);

@@ -1,11 +1,11 @@
 // components/CategoryModal.js
 import { Modal, Button, Form } from 'react-bootstrap';
 
-const CategoryModal = ({ show, onHide, category, onSave, onChange }) => {
+const CategoryModal = ({ show, onHide, category, onSave, onChange, isFunc }) => {
   return (
     <Modal show={show} onHide={onHide}>
       <Modal.Header closeButton>
-        <Modal.Title>{category ? 'Sửa danh mục' : 'Thêm danh mục'}</Modal.Title>
+        <Modal.Title>{isFunc? 'Sửa danh mục' : 'Thêm danh mục'}</Modal.Title>
       </Modal.Header>
       <Modal.Body>
         <Form>
@@ -14,7 +14,7 @@ const CategoryModal = ({ show, onHide, category, onSave, onChange }) => {
             <Form.Control
               type="text"
               placeholder="Nhập tên danh mục"
-              value={category?.name || ''}
+              value={isFunc? category.categoryName : category}
               onChange={onChange}
             />
           </Form.Group>
@@ -22,7 +22,7 @@ const CategoryModal = ({ show, onHide, category, onSave, onChange }) => {
       </Modal.Body>
       <Modal.Footer>
         <Button variant="secondary" onClick={onHide}>Hủy</Button>
-        <Button variant="primary" onClick={onSave}>{category ? 'Lưu' : 'Thêm'}</Button>
+        <Button variant="primary" onClick={onSave}>{isFunc ? 'Lưu' : 'Thêm'}</Button>
       </Modal.Footer>
     </Modal>
   );

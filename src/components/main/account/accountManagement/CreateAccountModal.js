@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { Modal, Button, Form } from "react-bootstrap";
 import Loading from "@/components/loading";
 import authorizeAxiosInstance from "@/hooks/axios";
@@ -11,13 +11,26 @@ let URL_ROOT = process.env.NEXT_PUBLIC_URL_ROOT
 const CreateAccountModal = () => {
   const [show, setShow] = useState(false);
   const [loading, setLoading] = useState(false);
+  const [roles, setRoles] = useState([]);
   const [formData, setFormData] = useState({
     fullName: "",
     email: "",
     phone: "",
     password: "",
     balance: 0,
+    role:"STAFF"
   });
+
+  useEffect(()=>{
+   (async ()=>{
+    let respon = await authorizeAxiosInstance.get( URL_ROOT+ "/private/user/get-role");
+    console.log(respon)
+    if(respon.status === 200){
+      setRoles(respon.data);
+    }
+   })();
+  },[])
+
 
   const [errorVali, setErrorVali] = useState({
     fullName: "",
@@ -88,7 +101,7 @@ const CreateAccountModal = () => {
       console.log("Account Created:", formData);
       try {
         let url = `${URL_ROOT}/private/user/create`
-        let response = await authorizeAxiosInstance.post(url,formData);
+        await authorizeAxiosInstance.post(url,formData);
         mutate(`${URL_ROOT}/private/user/get-staff`)
         setLoading(false);
         onHide();   
@@ -143,7 +156,7 @@ const CreateAccountModal = () => {
                 onChange={handleChange}
               />
               {errorVali.fullName && (
-                <span style={{ color: 'red', fontSize: '0.875rem' }}>
+                <span style={{ color: "red", fontSize: "0.875rem" }}>
                   {errorVali.fullName}
                 </span>
               )}
@@ -160,7 +173,7 @@ const CreateAccountModal = () => {
                 onChange={handleChange}
               />
               {errorVali.email && (
-                <span style={{ color: 'red', fontSize: '0.875rem' }}>
+                <span style={{ color: "red", fontSize: "0.875rem" }}>
                   {errorVali.email}
                 </span>
               )}
@@ -177,7 +190,7 @@ const CreateAccountModal = () => {
                 onChange={handleChange}
               />
               {errorVali.phone && (
-                <span style={{ color: 'red', fontSize: '0.875rem' }}>
+                <span style={{ color: "red", fontSize: "0.875rem" }}>
                   {errorVali.phone}
                 </span>
               )}
@@ -194,10 +207,25 @@ const CreateAccountModal = () => {
                 onChange={handleChange}
               />
               {errorVali.password && (
-                <span style={{ color: 'red', fontSize: '0.875rem' }}>
+                <span style={{ color: "red", fontSize: "0.875rem" }}>
                   {errorVali.password}
                 </span>
               )}
+            </Form.Group>
+            <Form.Group controlId="status" className="mt-2">
+              <Form.Label>Chức vụ</Form.Label>
+              <Form.Control
+                as="select"
+                name="role"
+                value={formData.role}
+                onChange={handleChange}
+              >
+                {roles.map((role) => (
+                  <option key={role} value={role}>
+                    {role}
+                  </option>
+                ))}
+              </Form.Control>
             </Form.Group>
 
             {/* Số Dư */}
@@ -210,7 +238,7 @@ const CreateAccountModal = () => {
                 onChange={handleChange}
               />
               {errorVali.balance && (
-                <span style={{ color: 'red', fontSize: '0.875rem' }}>
+                <span style={{ color: "red", fontSize: "0.875rem" }}>
                   {errorVali.balance}
                 </span>
               )}

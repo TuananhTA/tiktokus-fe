@@ -8,7 +8,7 @@ const DownloadButton = () => {
   let url = `${URL_ROOT}/public/download`;
 
   return (
-    <a href={url} download>
+    <a href={url} download style={{marginTop:"3px"}}>
       <Button variant="success">Tải file CSV</Button>
     </a>
   );

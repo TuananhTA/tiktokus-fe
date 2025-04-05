@@ -18,6 +18,7 @@ import { useStore } from "@/store/hooks";
 import { mutate } from "swr";
 import AuthGuard from "@/components/AuthProvider/AuthGuard";
 import PaginationCustom from "@/components/Pagination/PaginationCustom";
+import ScrollMenu from "@/components/ScrollMenu";
 
 let URL_ROOT = process.env.NEXT_PUBLIC_URL_ROOT;
 
@@ -30,7 +31,10 @@ export default function Product() {
   const [loading, setLoading] = useState(false);
 
     const [searchKeyword, setSearchKeyword] = useState(""); // Từ khóa tìm kiếm
-    const [debouncedKeyword, setDebouncedKeyword] = useState(searchKeyword); // Từ khóa với debounce
+    const [debouncedKeyword, setDebouncedKeyword] = useState({
+      search : "",
+      categoryName: ""
+    });
 
     const [state] = useStore();
     const { user } = state;
@@ -38,7 +42,7 @@ export default function Product() {
     const params = {
       page,
       size,
-      ...(debouncedKeyword ? { search: debouncedKeyword } : {}), 
+      ...debouncedKeyword, 
     };
 
   const { data, error, isLoading, key } = getData(
@@ -189,7 +193,7 @@ export default function Product() {
   };
 
   const handleClickTable = (item) => {
-    if (user && user.role === "STAFF") return null;
+    if (user && user.role != "ADMIN") return null;
     setFormDataUpdate({
       productName: item.productName,
       quantity: item.quantity,
@@ -269,7 +273,10 @@ export default function Product() {
       inputRef.current.focus();
     }
     const handler = setTimeout(() => {
-      setDebouncedKeyword(searchKeyword);
+      setDebouncedKeyword({
+        ...debouncedKeyword,
+        search : searchKeyword
+      });
       setPage(0);
     }, 500);
     return () => clearTimeout(handler);
@@ -296,11 +303,20 @@ export default function Product() {
       </AuthGuard>
     );  
   const products = data?.data?.content || [];
-  console.log(data);
   const totalPages = data?.data?.totalPages || 1;
 
 
   const handleOpen = () => window.location.href="/product/excel";
+
+  const {data: categories} = getData(`${URL_ROOT}/private/category/get-in-product`);
+
+  const handleItemClick = (item) => {
+    setPage(0);
+    setDebouncedKeyword({
+      ...debouncedKeyword,
+      categoryName : item.categoryName
+    })
+  };
 
   return (
     <>
@@ -327,13 +343,18 @@ export default function Product() {
                 <Button variant="dark" className="m-1" onClick={handleOpen}>
                   Xuất file
                 </Button>
-
               </div>
             )}
             <div>
-              <SearchInput ref={inputRef} value={searchKeyword} setValue={setSearchKeyword} onCancel={onCancel} />
+              <SearchInput
+                ref={inputRef}
+                value={searchKeyword}
+                setValue={setSearchKeyword}
+                onCancel={onCancel}
+              />
             </div>
           </div>
+          <ScrollMenu items={categories?.data || []} onItemClick={handleItemClick} />
           <ModalCustomV2
             size={"lg"}
             heading={"Sửa sản phẩm"}
@@ -351,28 +372,31 @@ export default function Product() {
           </ModalCustomV2>
           <Table
             columns={columns}
-            data= {products}
+            data={products}
             onClick={handleClickTable}
             page={page}
             size={size}
           ></Table>
-          <div style={{display:"flex"}}>
+          <div style={{ display: "flex" }}>
             <PaginationCustom
               currentPage={page + 1} // currentPage bắt đầu từ 1 cho UI
               totalPages={totalPages}
               onPageChange={(newPage) => setPage(newPage - 1)} // Chuyển về index 0-based cho API
             />
-            <Form.Group controlId="formSelect" style={{marginLeft:"4px", width:"80px"}}>
-              <Form.Control 
-                as="select" 
+            <Form.Group
+              controlId="formSelect"
+              style={{ marginLeft: "4px", width: "80px" }}
+            >
+              <Form.Control
+                as="select"
                 value={size}
-                onChange={(e)=> {
+                onChange={(e) => {
                   setPage(0);
-                  setSize(e.target.value)
+                  setSize(e.target.value);
                 }}
               >
-                <option value="10" >Size</option>
-                <option value="10" >10</option>
+                <option value="10">Size</option>
+                <option value="10">10</option>
                 <option value="20">20</option>
                 <option value="50">50</option>
                 <option value="100">100</option>

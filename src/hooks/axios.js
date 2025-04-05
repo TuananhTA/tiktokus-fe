@@ -5,8 +5,6 @@ import { initialize } from "@/store/actions";
 // import { useStore } from "@/store/hooks";
 
 
-
-
 let authorizeAxiosInstance = axios.create();
 
 authorizeAxiosInstance.defaults.timeout =1000 *60 * 10;

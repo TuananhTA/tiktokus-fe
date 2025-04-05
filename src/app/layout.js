@@ -10,8 +10,7 @@ import 'react-photo-view/dist/react-photo-view.css';
 import "bootstrap-icons/font/bootstrap-icons.css";
 import { Roboto } from 'next/font/google'
 import 'tippy.js/dist/tippy.css'; 
-
-
+import "react-horizontal-scrolling-menu/dist/styles.css";
 const roboto = Roboto({
   weight: ['400', '700'],
   style: ['normal', 'italic'],

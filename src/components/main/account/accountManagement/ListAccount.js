@@ -30,6 +30,7 @@ export default function ListAccount({users, handleClick}){
               <th>Tên tài khoản</th>
               <th>Email</th>
               <th>Số điện thoại</th>
+              <th>Chức vụ</th>
               <th>Thông tin khác</th>
               <th>Sửa</th>
             </tr>
@@ -50,6 +51,9 @@ export default function ListAccount({users, handleClick}){
                 </td>
                 <td style={{padding:"2px"}}>
                    <p style={{padding : "0", margin : "0"}}>{user.email}</p>
+                </td>
+                <td style={{padding:"2px"}}>
+                   <p style={{padding : "0", margin : "0"}}>{user.role}</p>
                 </td>
                 <td style={{padding:"2px"}}>
                    <p style={{padding : "0", margin : "0"}}> Trạng thái: {user.status}</p>

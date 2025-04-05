@@ -12,7 +12,7 @@ export default function LoginPage() {
   const [password, setPassword] = useState("");
   const [error, setError] = useState("");
 
-  const [dispatch] = useStore();
+  const [state, dispatch] = useStore();
 
   const handleLogin = async (e) => {
     e.preventDefault();

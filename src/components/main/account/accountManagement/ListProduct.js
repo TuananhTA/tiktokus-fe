@@ -30,7 +30,6 @@ export default function ListProduct({ user }) {
       try {
         let response = await authorizeAxiosInstance.get(url);
         const data = response?.data?.content || [];
-        console.log(data)
         setProducts(data);
         setPage(1); // Reset về trang đầu khi có dữ liệu mới
       } catch (error) {

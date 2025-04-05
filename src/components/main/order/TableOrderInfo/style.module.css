@@ -28,3 +28,42 @@
 .table td:nth-child(4) {
     white-space: pre-wrap; /* Cho phép xuống dòng trong nội dung địa chỉ */
 }
+
+.pen{
+    width: 20px;
+    height: 20px;
+    padding: 4px;
+    font-size: 10px;
+    background: #eedfdf33;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position:  absolute;
+    top: 2px;
+    right: 4px;
+    border-radius: 2px;
+    box-shadow: rgba(0, 0, 0, 0.16) 0px 1px 4px, rgb(51, 51, 51) 0px 0px 0px 1px;
+    display: none;
+}
+.lable:hover .pen{
+    display: block;
+
+}
+.pen:hover{
+    background-color: black;
+    color: white;
+}
+.lable a{
+    color: #308bf3;
+}
+.lable .icon{
+    margin: 0 4px;
+    transition: all linear 0.5;
+    margin: "0 4px";
+    cursor:"pointer";
+}
+
+.lable .icon:hover{
+    color: #f20707;
+}
+

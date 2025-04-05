@@ -17,6 +17,34 @@ const OrderInfo = ({orderInfo, setOrderInfo, errors}) => {
 
     return (
       <div>
+         <Row className="mb-3">
+          <Col md={12}>
+            <Form.Group controlId="desgin">
+              <Form.Label>Desgin</Form.Label>
+              <Form.Control
+                type="text"
+                name="desgin"
+                autoComplete="off"
+                value={orderInfo.desgin}
+                onChange={handleChange}
+              />
+            </Form.Group>
+          </Col>
+        </Row>
+        <Row className="mb-3">
+          <Col md={12}>
+            <Form.Group controlId="mockup">
+              <Form.Label>Mockup</Form.Label>
+              <Form.Control
+                type="text"
+                name="mockup"
+                autoComplete="off"
+                value={orderInfo.mockup}
+                onChange={handleChange}
+              />
+            </Form.Group>
+          </Col>
+        </Row>
         {
          user?.role === "ADMIN" &&   <Row className="mb-3">
             <Col md={12}>

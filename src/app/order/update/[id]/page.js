@@ -11,7 +11,7 @@ export default function UpdateOrderPage({params}){
 
   return(
     <AuthGuard>
-      <RoleBasedGuard accessibleRoles={["ADMIN"]}>
+      <RoleBasedGuard accessibleRoles={["ADMIN","ORDER"]}>
         <UpdateOrder id= {id}></UpdateOrder>
       </RoleBasedGuard>
     </AuthGuard>

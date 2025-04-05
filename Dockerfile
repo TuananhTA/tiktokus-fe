@@ -1,29 +1,21 @@
-# Sử dụng Node.js 20 (phiên bản mới nhất hỗ trợ Next.js 15.0.2)
-FROM node:20-alpine AS base
+# Sử dụng Node.js chính thức làm base image
+FROM node:20-alpine
 
-# Thiết lập thư mục làm việc
+# Thiết lập thư mục làm việc trong container
 WORKDIR /app
 
-# Cài đặt các công cụ cần thiết (nếu cần)
-RUN apk add --no-cache libc6-compat
+# Sao chép package.json và package-lock.json (hoặc yarn.lock) vào container
+COPY package*.json ./
 
-# Sao chép file package.json và package-lock.json (nếu có)
-COPY package.json ./
-
-# Cài đặt dependencies
+# Cài đặt các dependencies cần thiết
 RUN npm install
 
-# Sao chép toàn bộ mã nguồn
+# Sao chép toàn bộ mã nguồn vào container
 COPY . .
 
-# Build ứng dụng Next.js
-RUN npm run build
 
-# Expose cổng mà Next.js sử dụng (mặc định là 3000)
+# Mở cổng 3000 (cổng mặc định của Next.js)
 EXPOSE 3000
 
-# Thiết lập biến môi trường (mặc định là production)
-ENV NODE_ENV=production
-
-# Chạy ứng dụng
+# Lệnh khởi động ứng dụng Next.js
 CMD ["npm", "start"]

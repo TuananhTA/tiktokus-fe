@@ -5,6 +5,11 @@ import Main from '@/components/main/main';
 import CategoryTable from '@/components/categorycom/CategoryTable';
 import CategoryModal from '@/components/categorycom/CategoryModal';
 import ProductModal from '@/components/categorycom/ProductModal';
+import getData from '@/hooks/useFechtData';
+import authorizeAxiosInstance from "@/hooks/axios"
+import { toast } from "react-toastify";
+require("dotenv").config();
+let URL_ROOT = process.env.NEXT_PUBLIC_URL_ROOT;
 
 export default function ProductCategories() {
   const [categories, setCategories] = useState([]);
@@ -16,65 +21,82 @@ export default function ProductCategories() {
   const [editCategory, setEditCategory] = useState(null);
   const [availableProducts, setAvailableProducts] = useState([]);
   const [assignedProducts, setAssignedProducts] = useState([]);
+  const [isFunc, setIsFunc] = useState(false);
+
+  const {
+    data: categoriesData,
+    isLoading: categoryIsLoading,
+    error: categoryError,
+  } = getData(`${URL_ROOT}/private/category/get-all-category`);
+  const {
+    data: productData,
+    isLoading: productIsLoading,
+    error: productError,
+  } = getData(`${URL_ROOT}/private/product/get-all-to-excel`);
 
   useEffect(() => {
-    fetchCategories();
-    fetchProducts();
-  }, []);
+    if(!categoryIsLoading && !categoryError){
+      console.log(categoriesData);
+      fetchCategories();
+    }
+  }, [categoriesData,categoryIsLoading,categoryError]);
 
-  const fetchCategories = async () => {
-    const data = [
-      { id: 1, name: 'Điện thoại', products: [] },
-      { id: 2, name: 'Laptop', products: [] },
-      { id: 3, name: 'Máy tính bảng', products: [] }
-    ];
-    setCategories(data);
+  useEffect(() => {
+    if(!productIsLoading && !productError){
+      fetchProducts();
+    }
+  }, [productData, productIsLoading, productError]);
+
+  const fetchCategories = () => {
+    setCategories(categoriesData.data);
   };
 
-  const fetchProducts = async () => {
-    const data = [
-      { id: 1, name: 'iPhone 13' },
-      { id: 2, name: 'MacBook Pro' },
-      { id: 3, name: 'iPad Air' },
-      { id: 4, name: 'Samsung Galaxy' },
-      { id: 5, name: 'Dell XPS 13' }
-    ];
-    setProducts(data);
-    setAvailableProducts(data);
+  const fetchProducts = () => {
+    setProducts(productData.data);
+    setAvailableProducts(productData.data);
   };
 
-  const handleAddCategory = () => {
+  const handleAddCategory =async () => {
     if (!newCategory) return;
-    const newCategoryData = {
-      id: categories.length + 1,
-      name: newCategory,
-      products: []
+    let url_post = `${URL_ROOT}/private/category/create-category?categoryName=${newCategory}`
+    const newCategoryData = await authorizeAxiosInstance.post(url_post); 
+    console.log(newCategoryData);
+    if(newCategoryData.status === 200){
+      toast.success("Thêm thư mục thành công!")
+      setCategories([newCategoryData.data,...categories]);
+      setNewCategory('');
+      setShowCategoryModal(false);
     };
-    setCategories([...categories, newCategoryData]);
-    setNewCategory('');
-    setShowCategoryModal(false);
-  };
-
+  }
   const handleEditCategory = (category) => {
+    setIsFunc(true)
     setEditCategory(category);
     setNewCategory(category.name);
     setShowCategoryModal(true);
   };
 
-  const handleSaveEditCategory = () => {
-    if (!newCategory || !editCategory) return;
-    const updatedCategories = categories.map((category) =>
-      category.id === editCategory.id ? { ...category, name: newCategory } : category
-    );
-    setCategories(updatedCategories);
-    setEditCategory(null);
-    setNewCategory('');
-    setShowCategoryModal(false);
+  const handleSaveEditCategory = async () => {
+
+    let url_change_name =`${URL_ROOT}/private/category/change-name/${editCategory.id}?categoryName=${editCategory.categoryName}`
+    const updatedCategories =  await authorizeAxiosInstance.put(url_change_name);
+    if(updatedCategories.status === 200){
+      toast.success("Chỉnh sửa thành công!")
+      setIsFunc(false)
+      setCategories(updatedCategories.data);
+      setEditCategory(null);
+      setNewCategory(''); 
+      setShowCategoryModal(false);
+    }
   };
 
-  const handleDeleteCategory = (id) => {
-    const updatedCategories = categories.filter((category) => category.id !== id);
-    setCategories(updatedCategories);
+  const handleDeleteCategory = async (id) => {
+    let url_delete = `${URL_ROOT}/private/category/delete-category/${id}`
+    const updatedCategories = await authorizeAxiosInstance.delete(url_delete);
+    console.log(updatedCategories);
+    if(updatedCategories.status === 200){
+      toast.success("Xóa danh mục thành công!");
+      setCategories(updatedCategories.data);
+    }
   };
 
   const handleAddProductToCategory = (category) => {
@@ -94,18 +116,26 @@ export default function ProductCategories() {
     setAssignedProducts(assignedProducts.filter(prod => prod.id !== product.id));
   };
 
-  const saveProducts = () => {
-    const updatedCategories = categories.map((category) =>
-      category.id === selectedCategory.id ? { ...category, products: assignedProducts } : category
-    );
-    setCategories(updatedCategories);
-    setShowProductModal(false);
+  const saveProducts = async () => {
+    console.log(selectedCategory);
+    let url_save =`${URL_ROOT}/private/category/add-product-in-category/${selectedCategory.id}`
+    console.log("ass: ",assignedProducts);
+    const updatedCategories = await authorizeAxiosInstance.post(url_save,assignedProducts)
+    if(updatedCategories.status === 200){
+      setCategories(updatedCategories.data);
+      setShowProductModal(false);
+    }
   };
 
   return (
     <Main title={"Category"}>
       <h1>Danh mục sản phẩm</h1>
-      <Button className='mb-2' onClick={() => setShowCategoryModal(true)}>Thêm danh mục</Button>
+      <Button className="mb-2" onClick={() => {
+        setIsFunc(false)
+        setShowCategoryModal(true)}
+        }>
+        Thêm danh mục
+      </Button>
       <CategoryTable
         categories={categories}
         onEdit={handleEditCategory}
@@ -115,9 +145,18 @@ export default function ProductCategories() {
       <CategoryModal
         show={showCategoryModal}
         onHide={() => setShowCategoryModal(false)}
-        category={editCategory}
-        onSave={editCategory ? handleSaveEditCategory : handleAddCategory}
-        onChange={(e) => setNewCategory(e.target.value)}
+        category={isFunc ? editCategory : newCategory}
+        onSave={isFunc ? handleSaveEditCategory : handleAddCategory}
+        isFunc= {isFunc}
+        onChange={
+          isFunc
+            ? (e) =>
+                setEditCategory({
+                  ...editCategory,
+                  categoryName: e.target.value,
+                })
+            : (e) => setNewCategory(e.target.value)
+        }
       />
       <ProductModal
         show={showProductModal}

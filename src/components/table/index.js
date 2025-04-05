@@ -1,7 +1,8 @@
 import PropTypes from 'prop-types';
 import style from "./table.module.css"
+import EmptyState from '../EmptyState/EmptyState';
 function Table({ columns, data, onClick, page = 0, size = 0}){
-
+    if(data.length === 0) return <EmptyState message='Trống'/>
     return (
         <table className={style["reusable-table"]}>
             <thead>
@@ -13,8 +14,8 @@ function Table({ columns, data, onClick, page = 0, size = 0}){
                 </tr>
             </thead>
             <tbody>
-                {data.map((row, rowIndex) => (
-                    <tr key={rowIndex} onClick={()=>onClick(row)}>
+                {data?.map((row, rowIndex) => (
+                    <tr key={row.id} onClick={()=>onClick(row)}>
 
                         <td>{page * size + rowIndex + 1}</td>
                         {columns.map((column, colIndex) => (

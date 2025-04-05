@@ -139,6 +139,18 @@ export default function UpdateOrder({ id }) {
     setErrors(newErrors);
     return isValid;
   }
+  const fomartPhone = (value)=>{
+    let phoneNumber = value;
+    if (!phoneNumber) return;
+    if (phoneNumber.startsWith("+1") ) {
+      phoneNumber = phoneNumber.replace(/^\+1/, "(+1)");
+      return phoneNumber;
+    }
+    if(!phoneNumber.startsWith("(+1)")){
+      phoneNumber = "(+1)" + phoneNumber;
+    }
+    return phoneNumber;
+  }
   // Sử dụng hàm validateForm
   const handleSubmit = async () => {
     if (validInfo() && validateByTikTok() && validate()) {
@@ -146,6 +158,7 @@ export default function UpdateOrder({ id }) {
       orderDetails.forEach((item) => {
         delete item.id;
       });
+      customerInfo.phone = fomartPhone(customerInfo.phone);
       let orders = {
         ...customerInfo,
         ...addressInfo,
@@ -204,6 +217,8 @@ export default function UpdateOrder({ id }) {
           tracking: order.tracking,
           extraId: order.extraId,
           status: order.status,
+          mockup: order.mockup,
+          desgin : order.desgin
         });
         setOrderDetails([...orderDetails, ...order.orderDetailsList]);
         setSelectedOption(order.type);

@@ -22,28 +22,14 @@ const AddressInfo = ({ addressInfo, setAddressInfo, errors }) => {
   useEffect(() => {
     (async () => {
       try {
-        const response = await axios.get(API_GET, {
-          headers: {
-            Accept: "application/json",
-            "api-token": API_KEY,
-            "user-email": EMAIL,
-          },
-        });
-        let api = response?.data?.auth_token;
-        if (api) {
-          const res = await axios.get(API_STATES, {
-            headers: {
-              Authorization: "Bearer " + api,
-            },
-          });
-          setStates(res.data || []);
-        }
+        const res = await axios.get(API_STATES);
+        console.log(res.data)
+        setStates(res.data.results || []);
       } catch (error) {
         console.log(error);
       }
     })();
   }, []);
-  console.log(addressInfo);
   return (
     <div>
       <Row className="mb-3">
@@ -106,8 +92,8 @@ const AddressInfo = ({ addressInfo, setAddressInfo, errors }) => {
              // Hiển thị border đỏ nếu có lỗi
             >
               {states?.map((state, index) => (
-                <option key={index} value={state.state_name}>
-                  {state.state_name}
+                <option key={index} value={state.ste_name[0]}>
+                  {state.ste_name[0]}
                 </option>
               ))}
             </Form.Control>
