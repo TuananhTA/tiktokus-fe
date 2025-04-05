@@ -16,10 +16,6 @@ yarn-debug.log*
 yarn-error.log*
 
 
-# Docker
-Dockerfile
-docker-compose.yml
-docker-compose.yaml
 
 # Editor directories and files
 .vscode/
