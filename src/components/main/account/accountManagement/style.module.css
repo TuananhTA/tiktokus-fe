@@ -1,0 +1,116 @@
+.input{
+  min-width: 500px;
+}
+
+/* Đổi màu tất cả các dòng trong bảng */
+.table tr {
+  background-color: #f9f9f9; /* Màu nền cho tất cả các dòng */
+}
+
+/* Đổi màu dòng chẵn */
+.table tr:nth-child(even) {
+  background-color: #ededed; /* Màu nền cho dòng chẵn */
+}
+
+/* Đổi màu dòng lẻ */
+.table tr:nth-child(odd) {
+  background-color: #ffffff; /* Màu nền cho dòng lẻ */
+}
+/* Đổi màu cho dòng có class "highlight-row" */
+.table tr.active {
+  background-color: #85c8d8; /* Màu nền đặc biệt cho dòng có class highlight-row */
+}
+
+/* Cấu trúc bảng */
+.table {
+  width: 100%;
+  border-collapse: collapse; /* Hợp nhất các đường viền */
+  margin-bottom: 1rem; /* Khoảng cách dưới bảng */
+  background-color: #fff; /* Màu nền của bảng */
+}
+
+/* Định dạng cho các ô tiêu đề (header) */
+.table th {
+  background-color: #f8f9fa; /* Màu nền giống như Bootstrap */
+  color: #495057; /* Màu chữ tối */
+  padding: 0.75rem; /* Khoảng cách padding cho các ô header */
+  text-align: left; /* Căn trái văn bản */
+  vertical-align: middle; /* Căn giữa dọc */
+  border-top: 1px solid #dee2e6; /* Đường viền trên */
+  border-bottom: 2px solid #dee2e6; /* Đường viền dưới đậm hơn */
+  font-size: 12px; /* Kích thước chữ */
+}
+
+/* Định dạng cho các ô dữ liệu (dòng bên dưới header) */
+.table td {
+  padding: 4px 4px; /* Khoảng cách giữa nội dung và viền */
+  vertical-align: middle; /* Căn giữa dọc */
+  text-align: left; /* Căn trái chữ */
+  cursor: pointer;
+  font-size: 12px;
+}
+
+/* Định dạng cho các đường viền */
+.table th {
+  border: 1px solid #dee2e6; /* Đường viền nhẹ cho các ô */
+  border-radius: 0.25rem; /* Bo góc nhẹ cho các ô */
+}
+
+/* Định dạng cho ô đầu tiên (có thể tùy chỉnh) */
+.table th:first-child,
+.table td:first-child {
+  padding-left: 1.5rem; /* Tăng khoảng cách cho ô đầu tiên */
+}
+
+.input{
+    position: relative;
+}
+.buttonAdd{
+    position: absolute;
+    right: 8px;
+    top: 50%;
+    transform: translateY(-50%);
+}
+.buttonAdd button {
+    background-color: #4CAF50; /* Màu nền xanh lá cây */
+    color: white; /* Màu chữ trắng */
+    border: none; /* Không có đường viền */
+    padding: 10px; /* Khoảng cách bên trong */
+    text-align: center; /* Canh giữa chữ */
+    text-decoration: none; /* Không có gạch chân */
+    display: inline-block; /* Hiển thị như một phần tử inline-block */
+    font-size: 16px; /* Kích thước chữ */
+    border-radius: 5px; /* Bo góc */
+    transition: background-color 0.3s, transform 0.3s; /* Hiệu ứng chuyển đổi */
+}
+
+.buttonAdd button:hover {
+    background-color: #45a049; /* Màu nền khi hover */
+    transform: translateY(-2px); /* Hiệu ứng nâng lên */
+}
+.buttonDele{
+    background-color: #e04141; /* Màu nền xanh lá cây */
+    color: white; /* Màu chữ trắng */
+    border: none; /* Không có đường viền */
+    padding: 10px; /* Khoảng cách bên trong */
+    text-align: center; /* Canh giữa chữ */
+    text-decoration: none; /* Không có gạch chân */
+    display: inline-block; /* Hiển thị như một phần tử inline-block */
+    font-size: 16px; /* Kích thước chữ */
+    border-radius: 5px; /* Bo góc */
+    transition: background-color 0.3s, transform 0.3s; /* Hiệu ứng chuyển đổi */ 
+}
+.buttonDele:hover {
+    background-color: #f01004; /* Màu nền khi hover */
+    transform: translateY(-2px); /* Hiệu ứng nâng lên */
+}
+.inputQuatity{
+    max-width: 100px;
+    width: 100%;
+}
+.cardItem{
+    cursor: pointer;
+}
+.cardItem:hover{
+    background-color: #edadad;
+}

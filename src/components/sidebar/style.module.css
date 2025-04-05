@@ -1,0 +1,34 @@
+.sidebar{
+
+}
+.wappLogo{
+    text-align: center;
+    padding: 8px;
+}
+
+.sidebar h1 {
+    font-size: 24px; /* Kích thước chữ cho logo */
+    color: #343a40; /* Màu chữ */
+    text-align: center; /* Canh giữa */
+    margin-bottom: 20px; /* Khoảng cách phía dưới */
+}
+
+.sidebar h3 {
+    font-size: 18px; /* Kích thước chữ cho tiêu đề */
+    color: #007bff; /* Màu chữ */
+    cursor: pointer; /* Con trỏ khi hover */
+    transition: color 0.3s; /* Hiệu ứng chuyển màu */
+}
+
+.sidebar .item:hover {
+    background-color: azure;/* Màu khi hover */
+}
+.logo {
+    max-width: 100px; /* Độ rộng của logo */
+    height: 100px; /* Chiều cao của logo */
+    background-image: url('/logo.png'); /* Đường dẫn đến hình ảnh logo */
+    background-size: cover; /* Đảm bảo hình ảnh phủ kín khu vực logo */
+    background-position: center; /* Căn giữa hình ảnh */
+    border-radius: 50%; /* Tạo hình tròn */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* Đổ bóng cho logo */
+}

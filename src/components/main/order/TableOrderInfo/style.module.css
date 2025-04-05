@@ -1,0 +1,30 @@
+/* styles/CustomerTable.module.css */
+.table {
+    width: 100%;
+    margin-top: 20px;
+}
+
+.table th, .table td {
+    vertical-align: middle;
+    font-size: 10px;
+}
+
+.table th {
+    background-color: #f8f9fa;
+    font-weight: bold;
+    text-align: center;
+    padding: 0;
+}
+
+.table td {
+    text-align: left;
+}
+.table tbody td{
+    border: none;
+    border-bottom: 1px #3333 solid;
+}
+
+/* CSS cho cột địa chỉ để hiển thị gọn gàng */
+.table td:nth-child(4) {
+    white-space: pre-wrap; /* Cho phép xuống dòng trong nội dung địa chỉ */
+}

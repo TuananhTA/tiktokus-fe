@@ -1,0 +1,20 @@
+/* styles.module.css */
+.layout {
+  display: flex;
+  height: 100vh; /* Đảm bảo chiều cao của layout là toàn bộ màn hình */
+}
+
+.sidebar {
+  width: 250px; /* Đặt độ rộng cho sidebar */
+  background-color: #f4f4f4;
+  height: 100%; /* Đảm bảo sidebar có chiều cao đầy đủ */
+  overflow-y: auto; /* Sidebar có thể cuộn nếu nội dung dài */
+}
+
+.w {
+  flex-grow: 1 !important;
+  width: 100%;
+  padding: 0 8px;
+  height: 100vh; /* Chiều cao của phần nội dung chính */
+  overflow-y: auto; /* Đảm bảo phần này có thanh cuộn riêng */
+}

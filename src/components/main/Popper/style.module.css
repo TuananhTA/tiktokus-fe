@@ -1,0 +1,12 @@
+.wapper{
+    width: 100%;
+    max-width: none;
+    position: absolute;
+    background-color: #fff;
+    border-radius: 12px;
+    z-index: 9999;
+    max-height: 400px;
+    overflow:  hidden auto;
+    padding:  12px;
+    margin-top: 12px;
+}

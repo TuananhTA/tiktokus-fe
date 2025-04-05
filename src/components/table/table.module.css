@@ -1,0 +1,27 @@
+.reusable-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin: 20px 0;
+    font-size: 1rem;
+    text-align: left;
+    cursor: pointer;
+}
+
+.reusable-table th,
+.reusable-table td {
+    padding: 12px 15px;
+    border: 1px solid #dee2e6;
+}
+
+.reusable-table th {
+    background-color: #f8f9fa;
+    color: #495057;
+}
+
+.reusable-table tr:nth-child(even) {
+    background-color: #f2f2f2; /* Màu nền cho hàng chẵn */
+}
+
+.reusable-table tr:hover {
+    background-color: #e9ecef; /* Màu nền khi hover */
+}

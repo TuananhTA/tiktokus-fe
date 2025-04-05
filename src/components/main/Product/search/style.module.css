@@ -1,0 +1,26 @@
+/* styles.css */
+.searchContainer {
+    display: flex;
+    align-items: center;
+    margin-bottom: 20px; /* Khoảng cách dưới cùng */
+  }
+  
+  .searchContainer input {
+    width: 400px;
+    height: 40px; /* Chiều rộng của ô input */
+    margin-right: 10px;
+    padding: 4px 8px;
+    outline: 1px  aqua solid ; /* Khoảng cách bên phải của ô input */
+  }
+  
+  .searchContainer button {
+    background-color: #dc3545; /* Màu nền cho button "Hủy" */
+    color: white; /* Màu chữ */
+    border: none; /* Bỏ viền */
+    padding:  8px 12px;
+    border-radius: 4px;
+  }
+  .searchContainer button:hover {
+    background-color: #c82333; /* Màu nền khi hover */
+  }
+  
